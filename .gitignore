@@ -1,0 +1,11 @@
+res/lyrics/filtered/filtered_lyrics.txt
+res/lyrics/filtered/filtered_lyrics_test.txt
+res/lyrics/raw/black.txt
+res/lyrics/raw/black_test.txt
+res/lyrics/raw/death.txt
+res/lyrics/raw/death_test.txt
+res/lyrics/raw/doom.txt
+res/lyrics/raw/doom_test.txt
+res/lyrics/raw/thrash.txt
+res/lyrics/raw/thrash_test.txt
+res/model/pickle.pkl
