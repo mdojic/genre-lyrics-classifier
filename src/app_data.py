@@ -13,8 +13,9 @@ PICKLE_FILE_PATH               = MODEL_FOLDER_PATH + "/pickle.pkl"
 LYRICS_GENRES          = ["black", "death", "doom", "thrash"]
 BATCH_SIZE = 250
 PREPROCESS_LYRICS_UNWANTED_STRINGS = ["webmaster@darklyrics.com", "Submits, comments, corrections are welcomed at"]
-PREPROCESS_LYRICS_UNWANTED_REGEX = ["[[].*[]]", "(thanks).*(lyrics)", "(All lyrics).*", "(Lyrics by).*", "(Produced by).*", "(Recorded & mixed).*", "(Thanks to).*(lyrics)", "(Lyrics written).*"]
+PREPROCESS_LYRICS_UNWANTED_REGEX = ["[[].*[]]", "(thanks).*(lyrics)", "(Thanks to).*(lyrics)"] ###"(All lyrics).*", "(Lyrics by).*", "(Produced by).*", "(Recorded & mixed).*", , "(Lyrics written).*"]
 
 # Boolean properties to control application actions
 DEBUG_MODE    = False
 FILTER_LYRICS = False
+PREPROCESS_LYRICS = True

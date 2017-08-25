@@ -9,7 +9,6 @@ from src.preprocessing import Preprocessing
 from src.lyrics_reader import  LyricsReader
 from src.lemma_vectorizer import LemmaVectorizer
 
-
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import GaussianNB
@@ -29,6 +28,8 @@ class Main(object):
 
         print("App started")
 
+        nltk.download()
+
         # Check if lyrics need to be read and filtered so only english lyrics are left
         filtering_needed = app_data.FILTER_LYRICS
 
@@ -46,10 +47,10 @@ class Main(object):
 
 
         # Create vectorizer for extractig bag-of-words representations for lyrics
-        vectorizer = TfidfVectorizer(stop_words='english', max_df=0.4) # 0.45
+        # vectorizer = TfidfVectorizer(stop_words='english', max_df=0.4) # 0.45
         # vectorizer = TfidfVectorizer() # 0.448
         # vectorizer = CountVectorizer() # 0.4775, 0.4783
-        # vectorizer = LemmaVectorizer()
+        vectorizer = LemmaVectorizer()
 
         # Create an array containing all lyrics, and an array with genres of the respective lyrics
         all_lyrics = []
@@ -63,7 +64,13 @@ class Main(object):
                 all_lyrics.append(song_lyrics)
                 all_lyrics_genres.append(genre)
 
+
         print("Total lyrics: " + str(len(all_lyrics)))
+
+        if app_data.PREPROCESS_LYRICS:
+            print("Remove newlines...")
+            all_lyrics = Preprocessing.remove_newlines(all_lyrics)
+            print("Removed")
 
         lyrics_train, lyrics_test, genres_train, genres_test = train_test_split(all_lyrics, all_lyrics_genres, test_size=0.33)
 
@@ -132,6 +139,7 @@ class Main(object):
     def teach_classifier_in_batches(self, classifier, vectorizer, dataset, classes, available_classes):
         """ Go through the training set, vectorize a batch of data, and teach it to the classifier
             Repeat while there is more data to teach"""
+
         batch_num = 0
         dataset_batches = self._get_batches(dataset)
         classes_batches = self._get_batches(classes)
@@ -214,6 +222,7 @@ class Main(object):
 
     def current_milli_time(self):
         return int(round(time.time() * 1000))
+
 
     def print_top10(self, vectorizer, clf, class_labels):
         """Prints features with the highest coefficient values, per class"""

@@ -34,6 +34,16 @@ class Preprocessing(object):
 
 
     @staticmethod
+    def remove_newlines(lyrics):
+
+        for index, song_lyrics in enumerate(lyrics):
+            processed = song_lyrics.replace("\\n", " ")
+            lyrics[index] = processed
+
+        return lyrics
+
+
+    @staticmethod
     def _preprocess_lyrics(lyrics):
         unwanted_strings = app_data.PREPROCESS_LYRICS_UNWANTED_STRINGS
         unwanted_regex = app_data.PREPROCESS_LYRICS_UNWANTED_REGEX
