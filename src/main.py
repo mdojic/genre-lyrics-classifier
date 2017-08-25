@@ -46,10 +46,10 @@ class Main(object):
 
 
         # Create vectorizer for extractig bag-of-words representations for lyrics
-        # vectorizer = TfidfVectorizer(stop_words='english', max_df=0.5) # 0.45
+        vectorizer = TfidfVectorizer(stop_words='english', max_df=0.4) # 0.45
         # vectorizer = TfidfVectorizer() # 0.448
         # vectorizer = CountVectorizer() # 0.4775, 0.4783
-        vectorizer = LemmaVectorizer()
+        # vectorizer = LemmaVectorizer()
 
         # Create an array containing all lyrics, and an array with genres of the respective lyrics
         all_lyrics = []
@@ -85,13 +85,13 @@ class Main(object):
         vectorizer.fit(all_lyrics)
 
         print("Vectorizer fit finished")
-        print("Teach classifier in batches...")
+        print("Teach classifier...")
 
         partial_fit_classifiers = []
         full_fit_classifiers = []
 
-        partial_fit_classifiers.append(GaussianNB())          #
-        # partial_fit_classifiers.append(MultinomialNB())     # 0.455
+        # partial_fit_classifiers.append(GaussianNB())          #
+        partial_fit_classifiers.append(MultinomialNB())     # 0.455
 
         # full_fit_classifiers.append(SVC())
         # full_fit_classifiers.append(LinearSVC())
@@ -102,10 +102,10 @@ class Main(object):
 
         if len(full_fit_classifiers) != 0:
             for clf in full_fit_classifiers:
-                self.teach_classifier_in_batches(clf, vectorizer, lyrics_train, genres_train)
+                self.teach_classifier(clf, vectorizer, lyrics_train, genres_train)
 
         print("Teaching finished")
-        print("Test scores on test data")
+        print("Test score on test data")
 
         if len(partial_fit_classifiers) != 0:
             for clf in partial_fit_classifiers:
@@ -146,7 +146,7 @@ class Main(object):
     def teach_classifier(self, classifier, vectorizer, dataset, classes ):
 
         dataset_vect = vectorizer.transform(dataset)
-        classifier.fit(dataset_vect)
+        classifier.fit(dataset_vect, classes)
 
 
     def test_classifier_in_batches(self, classifier, vectorizer, dataset, classes):
