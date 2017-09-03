@@ -4,7 +4,7 @@ from nltk.stem import WordNetLemmatizer
 class LemmaVectorizer(CountVectorizer):
 
     def __init__(self):
-        super(LemmaVectorizer, self).__init__(stop_words='english', max_df=0.4)
+        super(LemmaVectorizer, self).__init__(stop_words='english', max_df=0.4, ngram_range=(3, 3))
         self.lemmatizer = WordNetLemmatizer()
 
 

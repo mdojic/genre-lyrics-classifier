@@ -62,6 +62,7 @@ class LyricsReader(object):
 
         Read english lyrics from the given file
 
+        :rtype: str
         :param file_path: Path to the file containing the lyrics to be read
         :return: Array containing only english lyrics from the input file
         """
