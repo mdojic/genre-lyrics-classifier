@@ -128,17 +128,17 @@ class Main(object):
 
                 ('lyrics_bow', Pipeline([
                                     ('selector', LyricsFeatureSelector(key='lyrics')),
-                                    ('vectorizer', CountVectorizer())
+                                    ('vectorizer', CountVectorizer(max_features=10000))
                                     #('transformer', TfidfTransformer())
                                 ])
                 )
 
             ], transformer_weights={
-                'verse_count'      : 0.5,
-                'stanza_count'     : 0.5,
-                'avg_verse_length' : 0.8,
-                'pos_tags_map'     : 1.0,
-                'lyrics_bow'       : 0.3
+                #'verse_count'      : 0.5,
+                #'stanza_count'     : 0.5,
+                #'avg_verse_length' : 0.8,
+                'pos_tags_map'     : 0.6,
+                'lyrics_bow'       : 0.9
             }
 
         )
@@ -146,12 +146,15 @@ class Main(object):
         pipeline = Pipeline([
             ('extractor', lyrics_features_extractor),
             ('transformes', transformers_union),
-            ('clf', SVC(kernel='linear'))
+            ('clf', LinearSVC())
         ])
 
+        print("Teach...")
         pipeline.fit(lyrics_train, genres_train)
+        print("Done.")
+        print("Test...")
         score = pipeline.score(lyrics_test, genres_test)
-        print("score = " + str(score))
+        print("Score = " + str(score))
 
 
     def classify_lyrics_mixed_features(self, genre_lyrics_map):
