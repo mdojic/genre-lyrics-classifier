@@ -190,32 +190,8 @@ class Preprocessing(object):
             # Save processed lyrics for current genre
             genre_lyrics_map[genre] = processed_lyrics
 
+
         Preprocessing._save_preprocessed_lyrics(genre_lyrics_map)
-
-
-    @staticmethod
-    def lyrics_array_to_features_dict(lyrics_array):
-
-        features_dict = {
-            "verse_count"     : [],
-            "stanza_count"    : [],
-            "avg_verse_length": [],
-            "pos_tags_map"    : [],
-            "lyrics"          : []
-        }
-
-        for lyrics in lyrics_array:
-
-            lyrics_features = lyrics["features"]
-            lyrics_content  = lyrics["lyrics"]
-
-            features_dict["verse_count"].append(lyrics_features["verse_count"])
-            features_dict["stanza_count"].append(lyrics_features["stanza_count"])
-            features_dict["avg_verse_length"].append(lyrics_features["avg_verse_length"])
-            features_dict["pos_tags_map"].append(lyrics_features["pos_tags_map"])
-            features_dict["lyrics"].append(lyrics_content)
-
-        return features_dict
 
 
     @staticmethod

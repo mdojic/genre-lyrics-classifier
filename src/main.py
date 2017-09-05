@@ -7,11 +7,12 @@ import time
 import numpy as np
 
 from src.preprocessing import Preprocessing
-from src.lyrics_features_extractor import LyricsFeaturesExtractor
 from src.lyrics_reader import  LyricsReader
 from src.lemma_vectorizer import LemmaVectorizer
 from src.lemma_tokenizer import LemmaTokenizer
 from src.custom_transformers import LyricsFeatureSelector
+from src.custom_transformers import AdvancedLyricsFeaturesExtractor
+from src.custom_transformers import BasicLyricsFeaturesExtractor
 
 from random import shuffle
 
@@ -86,62 +87,27 @@ class Main(object):
             print("Lyrics count for genre " + genre + ": " + str(len(genre_lyrics)))
 
             for song_lyrics in genre_lyrics:
-                # if current_genre_lyrics_count > 2000:
-                #     break
+                if current_genre_lyrics_count > 2700:
+                    break
 
                 all_lyrics.append(song_lyrics)
                 all_lyrics_genres.append(genre)
 
         lyrics_train, lyrics_test, genres_train, genres_test = train_test_split(all_lyrics, all_lyrics_genres, test_size=0.33)
 
-        lyrics_features_dict_train = Preprocessing.lyrics_array_to_features_dict(lyrics_train)
-        lyrics_features_dict_test  = Preprocessing.lyrics_array_to_features_dict(lyrics_test)
+        # lyrics_features_extractor = AdvancedLyricsFeaturesExtractor()
 
-        lyrics_features_extractor = LyricsFeaturesExtractor()
+        # transformers_union = self._get_advanced_features_transformator_union()
+        #
+        # pipeline = Pipeline([
+        #     ('extractor', lyrics_features_extractor),
+        #     ('transformes', transformers_union),
+        #     ('clf', LinearSVC())
+        # ])
 
-        transformers_union = FeatureUnion(transformer_list=[
+        lyrics_features_extractor = BasicLyricsFeaturesExtractor()
 
-                # ('verse_count', Pipeline([
-                #                     ('selector', LyricsFeatureSelector(key='verse_count')),
-                #                     ('transformer', TfidfVectorizer()),
-                #                 ])
-                # ),
-                #
-                # ('stanza_count', Pipeline([
-                #                     ('selector', LyricsFeatureSelector(key='stanza_count')),
-                #                     ('transformer', TfidfVectorizer())
-                #                 ])
-                # ),
-                #
-                # ('avg_verse_length', Pipeline([
-                #                         ('selector', LyricsFeatureSelector(key='avg_verse_length')),
-                #                         ('transformer', TfidfVectorizer())
-                #                     ])
-                # ),
-
-                ('pos_tags_map', Pipeline([
-                                    ('selector', LyricsFeatureSelector(key='pos_tags_map')),
-                                    ('vectorizer', DictVectorizer())
-                                    #('transformer', TfidfTransformer())
-                                 ])
-                ),
-
-                ('lyrics_bow', Pipeline([
-                                    ('selector', LyricsFeatureSelector(key='lyrics')),
-                                    ('vectorizer', CountVectorizer(max_features=10000))
-                                    #('transformer', TfidfTransformer())
-                                ])
-                )
-
-            ], transformer_weights={
-                #'verse_count'      : 0.5,
-                #'stanza_count'     : 0.5,
-                #'avg_verse_length' : 0.8,
-                'pos_tags_map'     : 0.6,
-                'lyrics_bow'       : 0.9
-            }
-
-        )
+        transformers_union = self._get_basic_features_transformator_union()
 
         pipeline = Pipeline([
             ('extractor', lyrics_features_extractor),
@@ -499,6 +465,87 @@ class Main(object):
             genre_lyrics_map = json.load(lyrics_file)
 
         return genre_lyrics_map
+
+    def _get_advanced_features_transformator_union(self):
+
+        union = FeatureUnion(transformer_list=[
+
+                # ('verse_count', Pipeline([
+                #                     ('selector', LyricsFeatureSelector(key='verse_count')),
+                #                     ('transformer', TfidfVectorizer()),
+                #                 ])
+                # ),
+                #
+                # ('stanza_count', Pipeline([
+                #                     ('selector', LyricsFeatureSelector(key='stanza_count')),
+                #                     ('transformer', TfidfVectorizer())
+                #                 ])
+                # ),
+                #
+                # ('avg_verse_length', Pipeline([
+                #                         ('selector', LyricsFeatureSelector(key='avg_verse_length')),
+                #                         ('transformer', TfidfVectorizer())
+                #                     ])
+                # ),
+
+                ('pos_tags_map', Pipeline([
+                    ('selector', LyricsFeatureSelector(key='pos_tags_map')),
+                    ('vectorizer', DictVectorizer())
+                    # ('transformer', TfidfTransformer())
+                ])
+                 ),
+
+                ('lyrics_bow', Pipeline([
+                    ('selector', LyricsFeatureSelector(key='lyrics')),
+                    ('vectorizer', CountVectorizer(max_features=10000))
+                    # ('transformer', TfidfTransformer())
+                ])
+                 )
+
+            ], transformer_weights={
+                # 'verse_count'      : 0.5,
+                # 'stanza_count'     : 0.5,
+                # 'avg_verse_length' : 0.8,
+                'pos_tags_map': 0.6,
+                'lyrics_bow'  : 0.9
+            }
+
+        )
+
+        return union
+
+    def _get_basic_features_transformator_union(self):
+
+        union = FeatureUnion(
+            transformer_list=[
+
+                ('features_dict', Pipeline([
+                                    ('selector', LyricsFeatureSelector(key='features')),
+                                    ('vectorizer', DictVectorizer())
+                                  ])
+                ),
+
+                ('pos_tags_map', Pipeline([
+                                    ('selector', LyricsFeatureSelector(key='pos_tags_map')),
+                                    ('vectorizer', DictVectorizer())
+                                ])
+                ),
+
+                ('lyrics_bow', Pipeline([
+                                    ('selector', LyricsFeatureSelector(key='lyrics')),
+                                    ('vectorizer', TfidfVectorizer(stop_words='english', max_df=0.4))
+                               ])
+                )
+
+            ],
+            transformer_weights={
+                'features_dict': 0.1,
+                'pos_tags_map' : 1.0,
+                'lyrics_bow'   : 0.5
+            }
+        )
+
+        return union
 
 
 if __name__ == "__main__":
