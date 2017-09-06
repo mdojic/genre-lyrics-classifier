@@ -74,7 +74,7 @@ class Preprocessing(object):
                             # Skip this artist if his genre is not allowed
                             if genre_word.lower() not in allowed_genres:
                                 allowed = False
-                                skipped_words_map[genre_word] = skipped_words_map[genre_word] + 1 if skipped_words_map.get(genre_word) != None else 1
+                                skipped_words_map[genre_word] = skipped_words_map.get(genre_word, 0) + 1
                                 break
 
                         if not allowed:
@@ -109,11 +109,17 @@ class Preprocessing(object):
                                 number_of_verses = len(verses)
 
                                 total_verses_length = 0
+                                total_words_count   = 0
                                 for verse in verses:
                                     verse_length = len(verse)
                                     total_verses_length += verse_length
 
-                                average_verse_length = total_verses_length / number_of_verses
+                                    verse_words = verse.split(" ")
+                                    verse_words_count = len(verse_words)
+                                    total_words_count += verse_words_count
+
+                                average_verse_length     = total_verses_length / number_of_verses
+                                average_verse_word_count = total_words_count / number_of_verses
 
                                 # Remove unwanted strings
                                 for string in unwanted_strings:
@@ -171,7 +177,9 @@ class Preprocessing(object):
                                     "features" : {
                                         "verse_count"      : verse_count,
                                         "stanza_count"     : stanza_count,
+                                        "word_count"       : total_words_count,
                                         "avg_verse_length" : average_verse_length,
+                                        "avg_verse_words"  : average_verse_word_count,
                                         "pos_tags_map"     : pos_tags_map
                                     },
                                     "lyrics" : lyrics
@@ -183,7 +191,7 @@ class Preprocessing(object):
                 else:
                     print("[x] \t Error: Lyrics JSON for genre " + genre + " is not in list format")
 
-            print("Skipped artists for genre: " + str(skipped_artists_count))
+            print("Skipped artists for genre " + genre  + ": " + str(skipped_artists_count))
             print("Skipped artists per invalid word for genre " + genre + ": " + str(skipped_words_map))
             print("Skipped invalid lyrics count: " + str(invalid_lyrics_count))
 

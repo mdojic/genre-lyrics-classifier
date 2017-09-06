@@ -46,8 +46,8 @@ class BasicLyricsFeaturesExtractor(BaseEstimator, TransformerMixin):
             lyrics_content  = lyrics["lyrics"]
 
             features_dict = {
-                "verse_count" : lyrics_features["verse_count"],
-                "stanza_count" : lyrics_features["stanza_count"],
+                "verse_count"      : lyrics_features["verse_count"],
+                "stanza_count"     : lyrics_features["stanza_count"],
                 "avg_verse_length" : lyrics_features["avg_verse_length"]
             }
 

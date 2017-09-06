@@ -87,8 +87,8 @@ class Main(object):
             print("Lyrics count for genre " + genre + ": " + str(len(genre_lyrics)))
 
             for song_lyrics in genre_lyrics:
-                if current_genre_lyrics_count > 2700:
-                    break
+                # if current_genre_lyrics_count > 2700:
+                #     break
 
                 all_lyrics.append(song_lyrics)
                 all_lyrics_genres.append(genre)
@@ -121,6 +121,8 @@ class Main(object):
         print("Test...")
         score = pipeline.score(lyrics_test, genres_test)
         print("Score = " + str(score))
+        print("Decision function: ")
+        print(pipeline.decision_function)
 
 
     def classify_lyrics_mixed_features(self, genre_lyrics_map):
@@ -231,8 +233,8 @@ class Main(object):
 
             for song_lyrics in genre_lyrics:
 
-                # if current_genre_lyrics_count > 2000:
-                #     break
+                if current_genre_lyrics_count > 2000:
+                    break
 
                 all_lyrics.append(song_lyrics["lyrics"])
                 all_lyrics_genres.append(genre)
@@ -273,7 +275,6 @@ class Main(object):
         self.print_confusion_matrix(full_fit_classifiers[0], vectorizer, lyrics_test, genres_test)
 
         self.predict_sample_lyrics_genre(app_data.SB_SAMPLE, full_fit_classifiers[0], vectorizer)
-
 
 
 
@@ -539,7 +540,7 @@ class Main(object):
 
             ],
             transformer_weights={
-                'features_dict': 0.1,
+                'features_dict': 0.2,
                 'pos_tags_map' : 1.0,
                 'lyrics_bow'   : 0.5
             }
