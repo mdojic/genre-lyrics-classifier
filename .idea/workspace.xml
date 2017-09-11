@@ -2,12 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="19d29c49-46c9-41d0-ae28-a6a5d1f53cfd" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lyrics_features_extractor.py" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/clf/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/clf/classify.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/flask/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/flask/controller.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/utils/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/utils/preprocessing.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/preprocessing.py" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/custom_transformers.py" afterPath="$PROJECT_DIR$/src/clf/custom_transformers.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/language_detect.py" afterPath="$PROJECT_DIR$/src/utils/language_detect.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lemma_tokenizer.py" afterPath="$PROJECT_DIR$/src/clf/lemma_tokenizer.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lemma_vectorizer.py" afterPath="$PROJECT_DIR$/src/clf/lemma_vectorizer.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lyrics_reader.py" afterPath="$PROJECT_DIR$/src/utils/lyrics_reader.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app_data.py" afterPath="$PROJECT_DIR$/src/app_data.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/custom_transformers.py" afterPath="$PROJECT_DIR$/src/custom_transformers.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main.py" afterPath="$PROJECT_DIR$/src/main.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/preprocessing.py" afterPath="$PROJECT_DIR$/src/preprocessing.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -21,55 +32,93 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="205">
-              <caret line="89" column="52" lean-forward="false" selection-start-line="89" selection-start-column="52" selection-end-line="89" selection-end-column="52" />
+            <state relative-caret-position="360">
+              <caret line="38" column="0" lean-forward="false" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
               <folding>
-                <element signature="e#0#10#0" expanded="true" />
-                <element signature="e#15832#15980#0" expanded="false" />
-                <element signature="e#16654#16982#0" expanded="false" />
-                <marker date="1504568198950" expanded="true" signature="19201:19445" ph="..." />
+                <element signature="e#0#31#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dict_vectorizer.py" pinned="false" current-in-tab="false">
-        <entry file="file:///usr/local/lib/python3.5/dist-packages/sklearn/feature_extraction/dict_vectorizer.py">
+      <file leaf-file-name="controller.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/flask/controller.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="201">
-              <caret line="177" column="0" lean-forward="false" selection-start-line="177" selection-start-column="0" selection-end-line="177" selection-end-column="0" />
+            <state relative-caret-position="450">
+              <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#49#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="classify.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/pages/classify.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="10" column="44" lean-forward="false" selection-start-line="10" selection-start-column="44" selection-end-line="10" selection-end-column="44" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="classify.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/clf/classify.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="246">
+              <caret line="64" column="31" lean-forward="true" selection-start-line="64" selection-start-column="31" selection-end-line="64" selection-end-column="31" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="thrash.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/lyrics/raw/thrash.txt">
+          <provider selected="true" editor-type-id="LargeFileEditor">
+            <state relative-caret-position="0">
+              <caret line="0" column="1" lean-forward="false" selection-start-line="0" selection-start-column="1" selection-end-line="0" selection-end-column="1246979" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="black.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/lyrics/raw/black.txt">
+          <provider selected="true" editor-type-id="LargeFileEditor">
+            <state relative-caret-position="0">
+              <caret line="0" column="693" lean-forward="false" selection-start-line="0" selection-start-column="693" selection-end-line="0" selection-end-column="693" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="preprocessed.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/lyrics/preprocessed/preprocessed.txt">
+          <provider selected="true" editor-type-id="LargeFileEditor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="preprocessing.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/preprocessing.py">
+        <entry file="file://$PROJECT_DIR$/src/utils/preprocessing.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1378">
-              <caret line="188" column="0" lean-forward="true" selection-start-line="188" selection-start-column="0" selection-end-line="188" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="custom_transformers.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/custom_transformers.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="489">
-              <caret line="57" column="44" lean-forward="false" selection-start-line="57" selection-start-column="44" selection-end-line="57" selection-end-column="44" />
+            <state relative-caret-position="476">
+              <caret line="146" column="66" lean-forward="true" selection-start-line="146" selection-start-column="66" selection-end-line="146" selection-end-column="66" />
               <folding>
-                <element signature="e#0#56#0" expanded="true" />
+                <element signature="e#0#16#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app_data.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="app_data.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/app_data.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="327">
-              <caret line="39" column="40" lean-forward="false" selection-start-line="39" selection-start-column="40" selection-end-line="39" selection-end-column="40" />
+            <state relative-caret-position="735">
+              <caret line="51" column="24" lean-forward="false" selection-start-line="51" selection-start-column="24" selection-end-line="51" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -81,42 +130,46 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>&lt;br&gt;\\n&lt;br&gt;\\n</find>
-      <find>vectorizer</find>
+      <find>skipped artists</find>
+      <find>logistic</find>
+      <find>Logistic</find>
+      <find>weight</find>
+      <find>lyrics</find>
+      <find>thanks</find>
+      <find>thank</find>
+      <find>_get_basic_features_transformator_union</find>
+      <find>lyri</find>
+      <find>lyrics_json</find>
+      <find>song_lyrics</find>
+      <find>song_lyr</find>
+      <find>nce</find>
+      <find>sch</find>
+      <find>tch</find>
       <find>features</find>
-      <find>sys</find>
-      <find>current_milli_time</find>
-      <find>filter_lyrics</find>
-      <find>_preprocess_lyrics</find>
-      <find>_save_preprocessed_lyrics</find>
-      <find>_are_lyrics_valid</find>
-      <find>_get_raw_lyrics_file_path</find>
-      <find>remove_newlines</find>
-      <find>items</find>
-      <find>items()</find>
-      <find>print</find>
-      <find>print_class</find>
-      <find>,</find>
-      <find>-</find>
-      <find>if genre</find>
-      <find>print_classification_report</find>
-      <find>classification</find>
-      <find>genre_lyrics_map</find>
-      <find>dictvectorizer</find>
-      <find>vect =</find>
-      <find>bag</find>
-      <find>teach</find>
-      <find>pipeline.fit</find>
-      <find>valid</find>
-      <find>lyrics count for</find>
-      <find>artistGenre</find>
-      <find>union =</find>
+      <find>all</find>
+      <find>grid</find>
+      <find>todo sigue</find>
+      <find>_get_lyrics_dict</find>
+      <find>endings_with</find>
+      <find>endings</find>
+      <find>all endings dict</find>
+      <find>sys.</find>
+      <find>max_importane</find>
+      <find>artistname</find>
+      <find>word_count</find>
+      <find>:100</find>
+      <find>linearsvc</find>
+      <find>joblib</find>
     </findStrings>
+    <replaceStrings>
+      <replace>Classify.</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -125,19 +178,24 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/res/lyrics/raw/doom.txt" />
-        <option value="$PROJECT_DIR$/res/lyrics/raw/black_test.txt" />
-        <option value="$PROJECT_DIR$/res/lyrics/raw/death_test.txt" />
-        <option value="$PROJECT_DIR$/res/lyrics/raw/doom_test.txt" />
-        <option value="$PROJECT_DIR$/res/lyrics/raw/thrash_test.txt" />
         <option value="$PROJECT_DIR$/src/lemma_vectorizer.py" />
         <option value="$PROJECT_DIR$/src/lemma_tokenizer.py" />
         <option value="$PROJECT_DIR$/res/vocab.txt" />
         <option value="$PROJECT_DIR$/src/lyrics_reader.py" />
         <option value="$PROJECT_DIR$/src/lyrics_features_extractor.py" />
-        <option value="$PROJECT_DIR$/src/preprocessing.py" />
+        <option value="$PROJECT_DIR$/res/lyrics/raw/black_test.txt" />
+        <option value="$PROJECT_DIR$/res/lyrics/raw/death_test.txt" />
+        <option value="$PROJECT_DIR$/res/lyrics/raw/doom_test.txt" />
+        <option value="$PROJECT_DIR$/res/lyrics/raw/thrash_test.txt" />
         <option value="$PROJECT_DIR$/src/custom_transformers.py" />
+        <option value="$PROJECT_DIR$/src/preprocessing.py" />
+        <option value="$PROJECT_DIR$/src/classify/classify.py" />
         <option value="$PROJECT_DIR$/src/main.py" />
+        <option value="$PROJECT_DIR$/res/pages/classify.html" />
+        <option value="$PROJECT_DIR$/src/clf/classify.py" />
+        <option value="$PROJECT_DIR$/src/utils/preprocessing.py" />
         <option value="$PROJECT_DIR$/src/app_data.py" />
+        <option value="$PROJECT_DIR$/src/flask/controller.py" />
       </list>
     </option>
   </component>
@@ -157,7 +215,15 @@
           <State>
             <id>General</id>
           </State>
+          <State>
+            <id>Python</id>
+          </State>
         </expanded-state>
+        <selected-state>
+          <State>
+            <id>PyCompatibilityInspection</id>
+          </State>
+        </selected-state>
       </profile-state>
     </entry>
   </component>
@@ -176,8 +242,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -194,36 +258,43 @@
               <item name="genre-lyrics-classifier" type="b2602c69:ProjectViewProjectNode" />
               <item name="genre-lyrics-classifier" type="462c0819:PsiDirectoryNode" />
               <item name="res" type="462c0819:PsiDirectoryNode" />
-              <item name="lyrics" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="genre-lyrics-classifier" type="b2602c69:ProjectViewProjectNode" />
               <item name="genre-lyrics-classifier" type="462c0819:PsiDirectoryNode" />
               <item name="res" type="462c0819:PsiDirectoryNode" />
-              <item name="lyrics" type="462c0819:PsiDirectoryNode" />
-              <item name="preprocessed" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="genre-lyrics-classifier" type="b2602c69:ProjectViewProjectNode" />
-              <item name="genre-lyrics-classifier" type="462c0819:PsiDirectoryNode" />
-              <item name="res" type="462c0819:PsiDirectoryNode" />
-              <item name="lyrics" type="462c0819:PsiDirectoryNode" />
-              <item name="raw" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="genre-lyrics-classifier" type="b2602c69:ProjectViewProjectNode" />
               <item name="genre-lyrics-classifier" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="genre-lyrics-classifier" type="b2602c69:ProjectViewProjectNode" />
+              <item name="genre-lyrics-classifier" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="flask" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Color Scheme Font" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/utils" />
+      <recent name="$PROJECT_DIR$/src/clf" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -279,7 +350,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="287" y="24" width="1867" height="1092" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14048257" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -287,7 +357,7 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32924336" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35480574" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29243353" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -327,6 +397,11 @@
           <line>187</line>
           <option name="timeStamp" value="32" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/utils/preprocessing.py</url>
+          <line>188</line>
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
@@ -338,64 +413,16 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="36" />
+      <option name="time" value="59" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
         <watch expression="self.key" language="Python" />
+        <watch expression="pair" language="Python" />
       </configuration>
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/lyrics_reader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="3" column="27" lean-forward="true" selection-start-line="3" selection-start-column="27" selection-end-line="3" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#15832#15980#0" expanded="false" />
-            <element signature="e#16654#16982#0" expanded="false" />
-            <marker date="1504568198950" expanded="true" signature="19201:19445" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lemma_tokenizer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="8" column="28" lean-forward="true" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app_data.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="20" column="18" lean-forward="false" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lemma_vectorizer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/preprocessing.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1170">
-          <caret line="70" column="133" lean-forward="false" selection-start-line="70" selection-start-column="133" selection-end-line="70" selection-end-column="133" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/res/lyrics/raw/black.txt">
       <provider selected="true" editor-type-id="LargeFileEditor">
         <state relative-caret-position="0">
@@ -403,7 +430,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lyrics_reader.py">
+    <entry file="file://$PROJECT_DIR$/src/utils/lyrics_reader.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="54">
           <caret line="3" column="27" lean-forward="true" selection-start-line="3" selection-start-column="27" selection-end-line="3" selection-end-column="27" />
@@ -415,10 +442,7 @@
         <state relative-caret-position="198">
           <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#15832#15980#0" expanded="false" />
-            <element signature="e#16654#16982#0" expanded="false" />
-            <marker date="1504568198950" expanded="true" signature="19201:19445" ph="..." />
+            <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -438,21 +462,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lemma_vectorizer.py">
+    <entry file="file://$PROJECT_DIR$/src/clf/lemma_vectorizer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
           <caret line="12" column="80" lean-forward="false" selection-start-line="10" selection-start-column="3" selection-end-line="12" selection-end-column="80" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/preprocessing.py">
+    <entry file="file://$PROJECT_DIR$/src/utils/preprocessing.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="990">
           <caret line="59" column="78" lean-forward="true" selection-start-line="59" selection-start-column="78" selection-end-line="59" selection-end-column="78" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lyrics_reader.py">
+    <entry file="file://$PROJECT_DIR$/src/utils/lyrics_reader.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="378">
           <caret line="21" column="44" lean-forward="false" selection-start-line="21" selection-start-column="44" selection-end-line="21" selection-end-column="44" />
@@ -471,22 +495,19 @@
         <state relative-caret-position="3420">
           <caret line="213" column="8" lean-forward="false" selection-start-line="213" selection-start-column="8" selection-end-line="213" selection-end-column="8" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#15832#15980#0" expanded="false" />
-            <element signature="e#16654#16982#0" expanded="false" />
-            <marker date="1504568198950" expanded="true" signature="19201:19445" ph="..." />
+            <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lemma_vectorizer.py">
+    <entry file="file://$PROJECT_DIR$/src/clf/lemma_vectorizer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
           <caret line="12" column="80" lean-forward="true" selection-start-line="10" selection-start-column="3" selection-end-line="12" selection-end-column="80" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/preprocessing.py">
+    <entry file="file://$PROJECT_DIR$/src/utils/preprocessing.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="810">
           <caret line="48" column="0" lean-forward="false" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
@@ -514,34 +535,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/lyrics/raw/black_test.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="40" lean-forward="false" selection-start-line="0" selection-start-column="40" selection-end-line="0" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/lyrics/raw/death_test.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="118866" lean-forward="false" selection-start-line="0" selection-start-column="118866" selection-end-line="0" selection-end-column="118866" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/lyrics/raw/doom_test.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="0" column="3360" lean-forward="true" selection-start-line="0" selection-start-column="3360" selection-end-line="0" selection-end-column="3360" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/lyrics/raw/thrash_test.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/lib/python3.5/json/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="186">
@@ -549,21 +542,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/lyrics/raw/thrash.txt">
-      <provider selected="true" editor-type-id="LargeFileEditor">
-        <state relative-caret-position="135">
-          <caret line="0" column="130647" lean-forward="false" selection-start-line="0" selection-start-column="130647" selection-end-line="0" selection-end-column="130647" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/lyrics/raw/death.txt">
-      <provider selected="true" editor-type-id="LargeFileEditor">
-        <state relative-caret-position="45">
-          <caret line="0" column="115091" lean-forward="true" selection-start-line="0" selection-start-column="115091" selection-end-line="0" selection-end-column="115091" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lyrics_reader.py">
+    <entry file="file://$PROJECT_DIR$/src/utils/lyrics_reader.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="54">
           <caret line="3" column="27" lean-forward="true" selection-start-line="3" selection-start-column="27" selection-end-line="3" selection-end-column="27" />
@@ -577,17 +556,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lemma_tokenizer.py">
+    <entry file="file://$PROJECT_DIR$/src/clf/lemma_tokenizer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
           <caret line="8" column="28" lean-forward="false" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/lyrics/preprocessed/preprocessed_test.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-198">
-          <caret line="0" column="1779" lean-forward="false" selection-start-line="0" selection-start-column="1779" selection-end-line="0" selection-end-column="1779" />
         </state>
       </provider>
     </entry>
@@ -598,29 +570,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lemma_vectorizer.py">
+    <entry file="file://$PROJECT_DIR$/src/clf/lemma_vectorizer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="36">
           <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/lyrics/preprocessed/preprocessed.txt">
-      <provider selected="true" editor-type-id="LargeFileEditor">
-        <state relative-caret-position="90">
-          <caret line="0" column="844" lean-forward="false" selection-start-line="0" selection-start-column="844" selection-end-line="0" selection-end-column="844" />
-        </state>
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/lyrics/raw/black.txt">
-      <provider selected="true" editor-type-id="LargeFileEditor">
-        <state relative-caret-position="18">
-          <caret line="0" column="8430" lean-forward="true" selection-start-line="0" selection-start-column="8430" selection-end-line="0" selection-end-column="8430" />
         </state>
       </provider>
     </entry>
@@ -681,66 +634,172 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lyrics_features_extractor.py">
+    <entry file="file://$PROJECT_DIR$/src/lyrics_features_extractor.py" />
+    <entry file="file://$PROJECT_DIR$/res/scores/.~lock.scores.ods#">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/lyrics/raw/doom.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="0" column="675606" lean-forward="false" selection-start-line="0" selection-start-column="675595" selection-end-line="0" selection-end-column="675606" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/preprocessing.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1378">
-          <caret line="188" column="0" lean-forward="true" selection-start-line="188" selection-start-column="0" selection-end-line="188" selection-end-column="0" />
-          <folding />
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file:///usr/local/lib/python3.5/dist-packages/sklearn/feature_extraction/dict_vectorizer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
+        <state relative-caret-position="3006">
           <caret line="177" column="0" lean-forward="false" selection-start-line="177" selection-start-column="0" selection-end-line="177" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/lib/python3.5/multiprocessing/pool.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="453">
+          <caret line="398" column="28" lean-forward="true" selection-start-line="398" selection-start-column="28" selection-end-line="398" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/lyrics/raw/death_test.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="538">
+          <caret line="0" column="1273928" lean-forward="true" selection-start-line="0" selection-start-column="1273928" selection-end-line="0" selection-end-column="1273928" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/lyrics/raw/death.txt">
+      <provider selected="true" editor-type-id="LargeFileEditor">
+        <state relative-caret-position="0">
+          <caret line="0" column="1" lean-forward="true" selection-start-line="0" selection-start-column="1" selection-end-line="0" selection-end-column="1273929" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/lyrics/raw/doom_test.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="538">
+          <caret line="0" column="9432374" lean-forward="false" selection-start-line="0" selection-start-column="9432374" selection-end-line="0" selection-end-column="9432374" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/lyrics/raw/doom.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="1" lean-forward="true" selection-start-line="0" selection-start-column="1" selection-end-line="0" selection-end-column="9432374" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/lyrics/raw/black_test.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="0" column="1095379" lean-forward="false" selection-start-line="0" selection-start-column="1095369" selection-end-line="0" selection-end-column="1095379" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/lyrics/raw/thrash_test.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="0" column="1226533" lean-forward="true" selection-start-line="0" selection-start-column="1226533" selection-end-line="0" selection-end-column="1226533" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/lyrics/preprocessed/preprocessed_test.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3276">
+          <caret line="0" column="25484" lean-forward="false" selection-start-line="0" selection-start-column="25484" selection-end-line="0" selection-end-column="25484" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="258">
+          <caret line="1026" column="13" lean-forward="true" selection-start-line="1026" selection-start-column="13" selection-end-line="1026" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/lyrics/raw/black.txt">
+      <provider selected="true" editor-type-id="LargeFileEditor">
+        <state relative-caret-position="0">
+          <caret line="0" column="693" lean-forward="false" selection-start-line="0" selection-start-column="693" selection-end-line="0" selection-end-column="693" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/lyrics/raw/thrash.txt">
+      <provider selected="true" editor-type-id="LargeFileEditor">
+        <state relative-caret-position="0">
+          <caret line="0" column="1" lean-forward="false" selection-start-line="0" selection-start-column="1" selection-end-line="0" selection-end-column="1246979" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/lyrics/preprocessed/preprocessed.txt">
+      <provider selected="true" editor-type-id="LargeFileEditor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="0" column="2044" lean-forward="false" selection-start-line="0" selection-start-column="2044" selection-end-line="0" selection-end-column="2044" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/custom_transformers.py">
+    <entry file="file://$PROJECT_DIR$/src/clf/custom_transformers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="489">
-          <caret line="57" column="44" lean-forward="false" selection-start-line="57" selection-start-column="44" selection-end-line="57" selection-end-column="44" />
-          <folding>
-            <element signature="e#0#56#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="442">
+          <caret line="55" column="55" lean-forward="false" selection-start-line="55" selection-start-column="55" selection-end-line="55" selection-end-column="55" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="205">
-          <caret line="89" column="52" lean-forward="false" selection-start-line="89" selection-start-column="52" selection-end-line="89" selection-end-column="52" />
+        <state relative-caret-position="360">
+          <caret line="38" column="0" lean-forward="false" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#15832#15980#0" expanded="false" />
-            <element signature="e#16654#16982#0" expanded="false" />
-            <marker date="1504568198950" expanded="true" signature="19201:19445" ph="..." />
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/pages/classify.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="10" column="44" lean-forward="false" selection-start-line="10" selection-start-column="44" selection-end-line="10" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils/preprocessing.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="146" column="66" lean-forward="true" selection-start-line="146" selection-start-column="66" selection-end-line="146" selection-end-column="66" />
+          <folding>
+            <element signature="e#0#16#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/app_data.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="327">
-          <caret line="39" column="40" lean-forward="false" selection-start-line="39" selection-start-column="40" selection-end-line="39" selection-end-column="40" />
+        <state relative-caret-position="735">
+          <caret line="51" column="24" lean-forward="false" selection-start-line="51" selection-start-column="24" selection-end-line="51" selection-end-column="24" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/clf/classify.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="246">
+          <caret line="64" column="31" lean-forward="true" selection-start-line="64" selection-start-column="31" selection-end-line="64" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/flask/controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#49#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
