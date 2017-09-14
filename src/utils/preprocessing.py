@@ -6,7 +6,7 @@ import sys
 
 import nltk
 
-import src.app_data as app_data
+import app_data as app_data
 from src.utils.language_detect import LanguageDetector
 
 
@@ -137,7 +137,7 @@ class Preprocessing(object):
             endings_with_importance[ending] = max_importance
 
         endings_with_importance_sorted_tuples = sorted(endings_with_importance.items(), key=operator.itemgetter(1), reverse=True)
-        max_importance_endings = endings_with_importance_sorted_tuples[:500]
+        max_importance_endings = endings_with_importance_sorted_tuples[:400]
         max_importance_endings_dict = dict(max_importance_endings)
 
         del endings_with_importance

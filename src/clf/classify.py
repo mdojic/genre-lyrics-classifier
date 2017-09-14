@@ -1,8 +1,5 @@
-import src.app_data as app_data
-
-import numpy as np
 import joblib
-
+import numpy as np
 from sklearn.feature_extraction.dict_vectorizer import DictVectorizer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
@@ -15,7 +12,7 @@ from sklearn.pipeline import FeatureUnion
 from sklearn.pipeline import Pipeline
 from sklearn.svm import LinearSVC
 
-import src.app_data as app_data
+import app_data as app_data
 from src.clf.custom_transformers import BasicLyricsFeaturesExtractor
 from src.clf.custom_transformers import LyricsFeatureSelector
 
@@ -33,7 +30,7 @@ class Classify(object):
 
         pickled_clf_path = app_data.PICKLE_FILE_PATH
         clf = joblib.load(pickled_clf_path)
-        genre = clf.predict(lyrics)
+        genre = clf.predict([lyrics])
         return genre
 
 
@@ -68,32 +65,36 @@ class Classify(object):
         #     ('clf', LinearSVC())
         # ])
 
-        lyrics_features_extractor = BasicLyricsFeaturesExtractor()
+        if app_data.TRAIN_CLASSIFIER:
 
-        transformers_union = Classify._get_basic_features_transformator_union()
+            lyrics_features_extractor = BasicLyricsFeaturesExtractor()
 
-        pipeline = Pipeline([
-            ('extractor', lyrics_features_extractor),
-            ('transformers', transformers_union),
-            ('clf', LinearSVC(dual=False, C=0.9))
-        ])
+            transformers_union = Classify._get_basic_features_transformator_union()
 
-        parameters = [{
-                        'clf__penalty'  : ('l1', 'l2'),
-                        'clf__C'        : (0.5, 0.8, 1.0),
-                        'clf__max_iter' : (1000, 2000)
-                     }]
+            pipeline = Pipeline([
+                ('extractor', lyrics_features_extractor),
+                ('transformers', transformers_union),
+                ('clf', LinearSVC(dual=False, C=0.9))
+            ])
 
-        # gs_clf = GridSearchCV(pipeline, parameters, n_jobs=1)
-        print("Teach...")
-        pipeline.fit(lyrics_train, genres_train)
-        #
-        # gs_clf.fit(lyrics_train, genres_train)
+            # gs_clf = GridSearchCV(pipeline, parameters, n_jobs=1)
+            print("Teach...")
+            pipeline.fit(lyrics_train, genres_train)
+            #
+            # gs_clf.fit(lyrics_train, genres_train)
+
+        else:
+            pickled_clf_path = app_data.PICKLE_FILE_PATH
+            pipeline = joblib.load(pickled_clf_path)
+
         print("Done.")
         print("Test...")
         score = pipeline.score(lyrics_test, genres_test)
         print("Done.")
         print("Score = " + str(score))
+        trans = pipeline.transform(lyrics_test[0])
+        pred = pipeline.predict([trans])
+        print("Pred = " + pred)
 
         # score = gs_clf.score(lyrics_test, genres_test, n_splits=1)
         # print("Score = " + str(score))

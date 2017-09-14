@@ -1,8 +1,7 @@
-import src.app_data as app_data
 import json
 import time
 
-import src.app_data as app_data
+import app_data as app_data
 from src.clf.classify import Classify
 from src.utils.preprocessing import Preprocessing
 
@@ -22,7 +21,6 @@ class Main(object):
             preprocess_end_time = time.time()
             elapsed = preprocess_end_time - preprocess_start_time
             print("Preprocessing time: " + str(elapsed))
-
 
         genre_lyrics_map = self._load_lyrics()
 
