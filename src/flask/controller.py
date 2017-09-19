@@ -25,6 +25,8 @@ def get_genre():
         return "eng brt"
 
     genre = Classify.predict_lyrics_genre(req_lyrics)
+    print("genre: ")
+    print(genre)
     return genre
 
     # TODO:

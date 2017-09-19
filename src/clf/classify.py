@@ -15,7 +15,7 @@ from sklearn.svm import LinearSVC
 import app_data as app_data
 from src.clf.custom_transformers import BasicLyricsFeaturesExtractor
 from src.clf.custom_transformers import LyricsFeatureSelector
-
+from src.utils.preprocessing import Preprocessing
 
 class Classify(object):
 
@@ -28,9 +28,11 @@ class Classify(object):
         :return str: The predicted genre for the given lyrics
         """
 
+        lyrics_dict = Preprocessing.get_lyrics_dict([lyrics])
+
         pickled_clf_path = app_data.PICKLE_FILE_PATH
         clf = joblib.load(pickled_clf_path)
-        genre = clf.predict([lyrics])
+        genre = clf.predict([lyrics_dict])
         return genre
 
 
@@ -92,9 +94,13 @@ class Classify(object):
         score = pipeline.score(lyrics_test, genres_test)
         print("Done.")
         print("Score = " + str(score))
-        trans = pipeline.transform(lyrics_test[0])
-        pred = pipeline.predict([trans])
-        print("Pred = " + pred)
+        # extracted = pipeline.named_steps['extractor'].transform([lyrics_test[0]])
+        # transformed = pipeline.named_steps['transformers'].transform(extracted)
+        # pred = pipeline.predict(transformed)
+        pred = pipeline.predict([lyrics_test[0]])
+        print("Pred: ")
+        print(pred)
+
 
         # score = gs_clf.score(lyrics_test, genres_test, n_splits=1)
         # print("Score = " + str(score))

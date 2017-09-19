@@ -83,7 +83,7 @@ class Preprocessing(object):
                             song_lyrics = album_lyrics.split("<h3>")
                             for lyrics in song_lyrics:
 
-                                lyrics_dict = Preprocessing._get_lyrics_dict(lyrics)
+                                lyrics_dict = Preprocessing.get_lyrics_dict(lyrics)
 
                                 if lyrics_dict is None:
                                     invalid_lyrics_count += 1
@@ -113,7 +113,8 @@ class Preprocessing(object):
             # Save processed lyrics for current genre
             genre_lyrics_map[genre] = processed_lyrics
 
-        # TODO: Keep only most important endings
+
+        # Keep only most important endings
         endings_with_importance = {}
         for ending, genre_counts in all_endings_dict.items():
 
@@ -201,7 +202,7 @@ class Preprocessing(object):
 
 
     @staticmethod
-    def _get_lyrics_dict(lyrics):
+    def get_lyrics_dict(lyrics):
 
         # Strings and regex for filtering lyrics
         unwanted_strings = app_data.PREPROCESS_LYRICS_UNWANTED_STRINGS
@@ -252,7 +253,7 @@ class Preprocessing(object):
 
         # POS tagging
         # Get words from lyrics and POS tags from them
-        words = nltk.word_tokenize(lyrics)
+        words   = nltk.word_tokenize(lyrics)
         pos_arr = nltk.pos_tag(words)
 
         # Get all available POS tags and create dictionary with POS tags as keys
@@ -296,12 +297,12 @@ class Preprocessing(object):
         # Create dictionary with lyrics and their features
         lyrics_dict = {
             "features": {
-                "verse_count"     : verse_count,
-                "stanza_count"    : stanza_count,
-                "word_count"      : total_words_count,
-                "avg_verse_length": average_verse_length,
-                "avg_verse_words" : average_verse_word_count,
-                "pos_tags_map"    : pos_tags_map,
+                "verse_count"     : verse_count,                # class'd
+                "stanza_count"    : stanza_count,               # class'd
+                "word_count"      : total_words_count,          # class'd
+                "avg_verse_length": average_verse_length,       # class'd
+                "avg_verse_words" : average_verse_word_count,   # class'd
+                "pos_tags_map"    : pos_tags_map,               # class'd
                 "endings"         : endings_dict
             },
             "lyrics"  : lyrics
