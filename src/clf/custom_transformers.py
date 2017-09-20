@@ -6,6 +6,7 @@ import operator
 import sys
 import itertools
 
+
 class LyricsVerseCountVectorizer(BaseEstimator, TransformerMixin):
 
     def fit(self, x, y=None):
@@ -17,9 +18,9 @@ class LyricsVerseCountVectorizer(BaseEstimator, TransformerMixin):
         vector = []
         verse_break  = app_data.LYRICS_VERSE_BREAK
 
-        for index, lyrics in enumerate(lyrics_array):
+        for lyrics in lyrics_array:
             verse_count = lyrics.count(verse_break) + 1
-            vector[index] = verse_count
+            vector.append(verse_count)
 
         return vector
 
@@ -35,9 +36,9 @@ class LyricsStanzaCountVectorizer(BaseEstimator, TransformerMixin):
         vector = []
         stanza_break = app_data.LYRICS_STANZA_BREAK
 
-        for index, lyrics in enumerate(lyrics_array):
+        for lyrics in lyrics_array:
             stanza_count = lyrics.count(stanza_break) + 1
-            vector[index] = stanza_count
+            vector.append(stanza_count)
 
         return vector
 
@@ -52,7 +53,7 @@ class LyricsAvgVerseLengthVectorizer(BaseEstimator, TransformerMixin):
         vector = []
         verse_break = app_data.LYRICS_VERSE_BREAK
 
-        for index, lyrics in enumerate(lyrics_array):
+        for lyrics in lyrics_array:
 
             verses              = lyrics.split(verse_break)
             number_of_verses    = len(verses)
@@ -64,7 +65,7 @@ class LyricsAvgVerseLengthVectorizer(BaseEstimator, TransformerMixin):
 
             average_verse_length = total_verses_length / number_of_verses
 
-            vector[index] = average_verse_length
+            vector.append(average_verse_length)
 
         return vector
 
@@ -80,7 +81,7 @@ class LyricsAvgVerseWordCountVectorizer(BaseEstimator, TransformerMixin):
         vector = []
         verse_break = app_data.LYRICS_VERSE_BREAK
 
-        for index, lyrics in enumerate(lyrics_array):
+        for lyrics in lyrics_array:
 
             verses = lyrics.split(verse_break)
             number_of_verses = len(verses)
@@ -91,9 +92,9 @@ class LyricsAvgVerseWordCountVectorizer(BaseEstimator, TransformerMixin):
                 verse_words_count = len(verse_words)
                 total_words_count += verse_words_count
 
-            average_verse_word_count = total_words_count / number_of_verses
+            average_verse_word_count = total_words_count // number_of_verses
 
-            vector[index] = average_verse_word_count
+            vector.append(average_verse_word_count)
 
         return vector
 
@@ -109,7 +110,7 @@ class LyricsWordCountVectorizer(BaseEstimator, TransformerMixin):
         vector = []
         verse_break = app_data.LYRICS_VERSE_BREAK
 
-        for index, lyrics in enumerate(lyrics_array):
+        for lyrics in lyrics_array:
 
             verses = lyrics.split(verse_break)
             total_words_count = 0
@@ -119,7 +120,7 @@ class LyricsWordCountVectorizer(BaseEstimator, TransformerMixin):
                 verse_words_count = len(verse_words)
                 total_words_count += verse_words_count
 
-            vector[index] = total_words_count
+            vector.append(total_words_count)
 
         return vector
 
@@ -135,7 +136,7 @@ class LyricsPartOfSpeechVectorizer(BaseEstimator, TransformerMixin):
         vector = []
         pos_tags = app_data.POS_TAGS
 
-        for index, lyrics in enumerate(lyrics_array):
+        for lyrics in lyrics_array:
 
             # Get words from lyrics and POS tags from them
             words = nltk.word_tokenize(lyrics)
@@ -164,7 +165,7 @@ class LyricsPartOfSpeechVectorizer(BaseEstimator, TransformerMixin):
                 normalized = (count - min_freq) / (max_freq - min_freq)
                 pos_tags_map[tag] = normalized
 
-            vector[index] = pos_tags_map
+            vector.append(pos_tags_map)
 
         return vector
 
@@ -173,9 +174,18 @@ class LyricsWordEndingsVectorizer(BaseEstimator, TransformerMixin):
 
     def __init__(self, top_endings_count=400):
         self._word_endings = []
+        self._top_endings_count = top_endings_count
 
 
     def fit(self, lyrics_array, genres=None):
+        """
+        Fit vectorizer to given lyrics array, and optionally their genres. <br/>
+        The vectorizer learns <i>top_endings_count most</i> important endings and uses them when
+        transforming future lyrics. If genres are given, ending importance calculation is better.
+
+        :param lyrics_array: Lyrics from which to learn word endings
+        :param genres: Genres of the corresponding lyrics (used for better ending importance calculation)
+        """
 
         # Get ending dictionaries for all lyrics
         all_lyrics_ending_dicts = self.__get_ending_dicts(lyrics_array)
@@ -185,6 +195,8 @@ class LyricsWordEndingsVectorizer(BaseEstimator, TransformerMixin):
             self.__fit_with_out_genres(all_lyrics_ending_dicts)
         else:
             self.__fit_with_genres(all_lyrics_ending_dicts, genres)
+
+        return self
 
 
     def __fit_with_genres(self, ending_dicts, genres):
@@ -208,7 +220,7 @@ class LyricsWordEndingsVectorizer(BaseEstimator, TransformerMixin):
                 if all_endings_dict.get(ending) is None:
                     all_endings_dict[ending] = {}
 
-                # Inrease the count for this ending in this genre
+                # Increase the count for this ending in this genre
                 all_endings_dict[ending][genre] = all_endings_dict[ending].get(genre, 0) + count
 
         # Keep only most important endings
@@ -244,17 +256,15 @@ class LyricsWordEndingsVectorizer(BaseEstimator, TransformerMixin):
 
         # Sort endings by their importances and create an ending-importance dictionary
         endings_sorted_tuples = sorted(endings_with_importance.items(), key=operator.itemgetter(1), reverse=True)
-        max_importance_endings_tuples = endings_sorted_tuples[:400]
+        max_importance_endings_tuples = endings_sorted_tuples[:self._top_endings_count]
         max_importance_endings = [ending_with_importance[0] for ending_with_importance in max_importance_endings_tuples]
 
         # Free memory
         del endings_with_importance
         del endings_sorted_tuples
-        del max_importance_endings
 
         # Remember the top endings
         self._word_endings = max_importance_endings
-
 
 
     def __fit_with_out_genres(self, ending_dicts):
@@ -274,7 +284,7 @@ class LyricsWordEndingsVectorizer(BaseEstimator, TransformerMixin):
 
         endings_sorted_tuples = sorted(all_endings_dict.items(), key=operator.itemgetter(1), reverse=True)
 
-        max_importance_endings_tuples = endings_sorted_tuples[:400]
+        max_importance_endings_tuples = endings_sorted_tuples[:self._top_endings_count]
         max_importance_endings = [ending_with_importance[0] for ending_with_importance in max_importance_endings_tuples]
 
         # Free memory
@@ -287,6 +297,13 @@ class LyricsWordEndingsVectorizer(BaseEstimator, TransformerMixin):
 
 
     def __get_ending_dicts(self, lyrics_array):
+
+        """
+        Get dictionaries from lyrics with word endings as keys and their counts as values
+
+        :param lyrics_array: Lyrics for which to generate ending-frequency dictionaries
+        :return: Array of ending-frequency dictionaries for the given lyrics
+        """
 
         all_lyrics_ending_dicts = []
 
@@ -312,7 +329,28 @@ class LyricsWordEndingsVectorizer(BaseEstimator, TransformerMixin):
 
     def transform(self, lyrics_array):
 
-        pass
+        vector = []
+
+        # Get endings which to count in all lyrics
+        learned_endings = self._word_endings
+        lyrics_endings_dicts = self.__get_ending_dicts(lyrics_array)
+
+        for lyrics_endings_dict in lyrics_endings_dicts:
+
+            # Initialize an empty dictionary for current lyrics containing endings as keys
+            top_endings_dict = {ending : 0 for ending in learned_endings}
+
+            for ending, count in lyrics_endings_dict.items():
+
+                # Count only endings which the vectorizer learned
+                if top_endings_dict.get(ending) is None:
+                    continue
+                else:
+                    top_endings_dict[ending] = count
+
+            vector.append(top_endings_dict)
+
+        return vector
 
 
 

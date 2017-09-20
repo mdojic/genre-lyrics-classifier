@@ -1,7 +1,11 @@
 import json
 import time
+import math
 
-import app_data as app_data
+from collections import defaultdict
+
+import app_data
+from src.utils.dataset_utils import DatasetUtils
 from src.clf.classify import Classify
 from src.utils.preprocessing import Preprocessing
 
@@ -22,9 +26,40 @@ class Main(object):
             elapsed = preprocess_end_time - preprocess_start_time
             print("Preprocessing time: " + str(elapsed))
 
-        genre_lyrics_map = self._load_lyrics()
+        split_dataset_needed = app_data.SPLIT_DATASET
+        if split_dataset_needed:
+            genre_lyrics_map = self._load_lyrics()
+
+            train_lyrics_map = defaultdict(list)
+            test_lyrics_map  = defaultdict(list)
+
+            for genre, genre_lyrics in genre_lyrics_map.items():
+                size = len(genre_lyrics)
+                train_size = math.ceil(size*0.75)
+                test_start = train_size + 1
+
+                genre_lyrics_train = genre_lyrics[:train_size]
+                genre_lyrics_test  = genre_lyrics[test_start:]
+
+                train_lyrics_map[genre] = genre_lyrics_train
+                test_lyrics_map[genre]  = genre_lyrics_test
+
+            print("Train lyrics map: ")
+            print(train_lyrics_map)
+
+            print("Test lyrics map: ")
+            print(test_lyrics_map)
+
+            DatasetUtils.save_training_set(train_lyrics_map)
+            DatasetUtils.save_test_set(test_lyrics_map)
+
+        training_set = DatasetUtils.load_training_set()
+        test_set = DatasetUtils.load_test_set()
+
 
         print("Loaded lyrics")
+
+        Classify.classify_lyrics(training_set, test_set)
 
         # self.classify_lyrics_bag_of_words(genre_lyrics_map)
 
@@ -32,7 +67,7 @@ class Main(object):
 
         # self.classify_lyrics_mixed_features(genre_lyrics_map)
 
-        Classify.classify_lyrics_all_features(genre_lyrics_map)
+        # Classify.classify_lyrics_all_features(genre_lyrics_map)
 
         end_time = time.time()
         running_time = end_time - start_time
@@ -46,7 +81,7 @@ class Main(object):
         else:
             lyrics_file_path = app_data.PREPROCESSED_LYRICS_FILE_PATH
 
-        with open (lyrics_file_path, 'r') as lyrics_file:
+        with open(lyrics_file_path, 'r') as lyrics_file:
             genre_lyrics_map = json.load(lyrics_file)
 
         return genre_lyrics_map

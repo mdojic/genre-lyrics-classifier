@@ -13,6 +13,8 @@ from sklearn.pipeline import Pipeline
 from sklearn.svm import LinearSVC
 
 import app_data as app_data
+import src.clf.custom_transformers as ct
+
 from src.clf.custom_transformers import BasicLyricsFeaturesExtractor
 from src.clf.custom_transformers import LyricsFeatureSelector
 from src.utils.preprocessing import Preprocessing
@@ -35,6 +37,127 @@ class Classify(object):
         genre = clf.predict([lyrics_dict])
         return genre
 
+
+    @staticmethod
+    def classify_lyrics(training_set, test_set):
+
+        lyrics_train = []
+        lyrics_test  = []
+        genres_train = []
+        genres_test  = []
+
+        for genre in app_data.LYRICS_GENRES:
+
+            current_genre_lyrics_count = 0
+
+            genre_lyrics_train = training_set[genre]
+            genre_lyrics_test  = test_set[genre]
+            genre_lyrics = genre_lyrics_train + genre_lyrics_test
+            print("Lyrics count for genre " + genre + ": " + str(len(genre_lyrics)))
+
+            for song_lyrics in genre_lyrics_train:
+                # if current_genre_lyrics_count > 2700:
+                #     break
+
+                lyrics_train.append(song_lyrics)
+                genres_train.append(genre)
+
+            for song_lyrics in genre_lyrics_test:
+
+                lyrics_test.append(song_lyrics)
+                genres_test.append(genre)
+
+
+        if app_data.TRAIN_CLASSIFIER:
+
+            transformers_union = Classify._get_lyrics_vectorizers()
+            pipeline = Pipeline([
+                ('transformers', transformers_union),
+                ('clf', LinearSVC(dual=False, C=0.9))
+            ])
+
+            # gs_clf = GridSearchCV(pipeline, parameters, n_jobs=1)
+            print("Teach...")
+            pipeline.fit(lyrics_train, genres_train)
+            #
+            # gs_clf.fit(lyrics_train, genres_train)
+
+            pickled_clf_path = app_data.PICKLE_FILE_PATH
+            joblib.dump(pipeline, pickled_clf_path)
+
+        else:
+            pickled_clf_path = app_data.PICKLE_FILE_PATH
+            pipeline = joblib.load(pickled_clf_path)
+
+        print("Done.")
+        print("Test...")
+        score = pipeline.score(lyrics_test, genres_test)
+        print("Done.")
+        print("Score = " + str(score))
+
+
+    @staticmethod
+    def _get_lyrics_vectorizers():
+
+        union = FeatureUnion(
+            transformer_list=[
+
+                ('verse_count', Pipeline([
+                                    ('extractor', ct.LyricsVerseCountVectorizer()),
+                                ])
+                ),
+
+                ('stanza_count', Pipeline([
+                                    ('extractor', ct.LyricsStanzaCountVectorizer()),
+                                 ])
+                ),
+
+                ('avg_verse_words', Pipeline([
+                                        ('extractor', ct.LyricsAvgVerseWordCountVectorizer())
+                                    ])
+
+                ),
+
+                ('word_count', Pipeline([
+                                    ('extractor', ct.LyricsWordCountVectorizer)
+                               ])
+                ),
+
+                ('pos_tags_map', Pipeline([
+                                    ('extractor', ct.LyricsPartOfSpeechVectorizer()),
+                                    ('vectorizer', DictVectorizer())
+                                 ])
+                ),
+
+                ('word_endings', Pipeline([
+                                    ('extractor', ct.LyricsWordEndingsVectorizer()),
+                                    ('vectorizer', DictVectorizer()),
+                                    ('transformer', TfidfTransformer())
+                                 ])
+
+                ),
+
+                ('lyrics_bow', Pipeline([
+                                    ('vectorizer', TfidfVectorizer(stop_words='english', max_df=0.6, analyzer='word'))
+                               ])
+                )
+
+            ],
+            transformer_weights={
+                'verse_count'     : 0.2,
+                'stanza_count'    : 0.2,
+                'avg_verse_words' : 0.3,
+                'word_count'      : 0.3,
+                'pos_tags_map'    : 1.0,
+                'word_endings'    : 0.7,
+                'lyrics_bow'      : 0.4
+            }
+        )
+
+        return union
+
+
+#################################################################################
 
     @staticmethod
     def classify_lyrics_all_features(genre_lyrics_map):

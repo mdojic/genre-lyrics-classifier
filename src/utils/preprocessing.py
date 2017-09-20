@@ -83,25 +83,49 @@ class Preprocessing(object):
                             song_lyrics = album_lyrics.split("<h3>")
                             for lyrics in song_lyrics:
 
-                                lyrics_dict = Preprocessing.get_lyrics_dict(lyrics)
+                                # Strings and regex for filtering lyrics
+                                unwanted_strings = app_data.PREPROCESS_LYRICS_UNWANTED_STRINGS
+                                unwanted_regex = app_data.PREPROCESS_LYRICS_UNWANTED_REGEX
 
-                                if lyrics_dict is None:
+                                lyrics = lyrics.lower()
+
+                                # Remove unwanted strings
+                                for string in unwanted_strings:
+                                    lyrics = lyrics.replace(string, "")
+
+                                # Remove unwanted regex
+                                for regex in unwanted_regex:
+                                    lyrics = re.sub(regex, "", lyrics, flags=re.IGNORECASE)
+
+                                # Remove and everything except alphanumeric strings, newlines and apostrophes
+                                lyrics = re.sub("[^A-Za-z0-9\\\\\s\']+", '', lyrics)
+
+                                lyrics_valid = Preprocessing._are_lyrics_valid(lyrics)
+                                if not lyrics_valid:
                                     invalid_lyrics_count += 1
                                     continue
 
-                                # Get word endings from current lyrics
-                                endings = lyrics_dict["features"]["endings"]
-                                for ending, count in endings.items():
+                                processed_lyrics.append(lyrics)
 
-                                    # If this ending appeared for the first time, instantiate its genre dictionary
-                                    if all_endings_dict.get(ending) is None:
-                                        all_endings_dict[ending] = {}
+                                # lyrics_dict = Preprocessing.get_lyrics_dict(lyrics)
 
-                                    # Inrease the count for this ending in this genre
-                                    all_endings_dict[ending][genre] = all_endings_dict[ending].get(genre, 0) + count
+                                # if lyrics_dict is None:
+                                #     invalid_lyrics_count += 1
+                                #     continue
 
-                                # processed_lyrics.append(lyrics)
-                                processed_lyrics.append(lyrics_dict)
+                                # # Get word endings from current lyrics
+                                # endings = lyrics_dict["features"]["endings"]
+                                # for ending, count in endings.items():
+                                #
+                                #     # If this ending appeared for the first time, instantiate its genre dictionary
+                                #     if all_endings_dict.get(ending) is None:
+                                #         all_endings_dict[ending] = {}
+                                #
+                                #     # Inrease the count for this ending in this genre
+                                #     all_endings_dict[ending][genre] = all_endings_dict[ending].get(genre, 0) + count
+                                #
+                                # # processed_lyrics.append(lyrics)
+                                # processed_lyrics.append(lyrics_dict)
 
                 else:
                     print("[x] \t Error: Lyrics JSON for genre " + genre + " is not in list format")
@@ -115,54 +139,54 @@ class Preprocessing(object):
 
 
         # Keep only most important endings
-        endings_with_importance = {}
-        for ending, genre_counts in all_endings_dict.items():
-
-            max_importance = -sys.maxsize
-            counts = genre_counts.values()
-            for pair in itertools.combinations(counts, 2):
-
-                if pair[0] < pair[1]:
-                    smaller = pair[0]
-                    bigger  = pair[1]
-                else:
-                    smaller = pair[1]
-                    bigger  = pair[0]
-
-                diff = bigger - smaller
-                importance = diff - smaller
-
-                if importance > max_importance:
-                    max_importance = importance
-
-            endings_with_importance[ending] = max_importance
-
-        endings_with_importance_sorted_tuples = sorted(endings_with_importance.items(), key=operator.itemgetter(1), reverse=True)
-        max_importance_endings = endings_with_importance_sorted_tuples[:400]
-        max_importance_endings_dict = dict(max_importance_endings)
-
-        del endings_with_importance
-        del endings_with_importance_sorted_tuples
-        del max_importance_endings
-
-        # Add dictionary with all found word endings to all lyrics
-        for genre in genre_lyrics_map.keys():
-
-            genre_lyrics = genre_lyrics_map[genre]
-            for index, lyrics in enumerate(genre_lyrics):
-                endings = lyrics["features"]["endings"]
-                new_endings = {}
-
-                # For every available ending:
-                # If these lyris contain that ending, use their count
-                # Otherwise use 0
-                for ending in max_importance_endings_dict:
-                    new_endings[ending] = endings.get(ending, 0)
-
-                lyrics["features"]["endings"] = new_endings
-                genre_lyrics[index] = lyrics
-
-            genre_lyrics_map[genre] = genre_lyrics
+        # endings_with_importance = {}
+        # for ending, genre_counts in all_endings_dict.items():
+        #
+        #     max_importance = -sys.maxsize
+        #     counts = genre_counts.values()
+        #     for pair in itertools.combinations(counts, 2):
+        #
+        #         if pair[0] < pair[1]:
+        #             smaller = pair[0]
+        #             bigger  = pair[1]
+        #         else:
+        #             smaller = pair[1]
+        #             bigger  = pair[0]
+        #
+        #         diff = bigger - smaller
+        #         importance = diff - smaller
+        #
+        #         if importance > max_importance:
+        #             max_importance = importance
+        #
+        #     endings_with_importance[ending] = max_importance
+        #
+        # endings_with_importance_sorted_tuples = sorted(endings_with_importance.items(), key=operator.itemgetter(1), reverse=True)
+        # max_importance_endings = endings_with_importance_sorted_tuples[:400]
+        # max_importance_endings_dict = dict(max_importance_endings)
+        #
+        # del endings_with_importance
+        # del endings_with_importance_sorted_tuples
+        # del max_importance_endings
+        #
+        # # Add dictionary with all found word endings to all lyrics
+        # for genre in genre_lyrics_map.keys():
+        #
+        #     genre_lyrics = genre_lyrics_map[genre]
+        #     for index, lyrics in enumerate(genre_lyrics):
+        #         endings = lyrics["features"]["endings"]
+        #         new_endings = {}
+        #
+        #         # For every available ending:
+        #         # If these lyris contain that ending, use their count
+        #         # Otherwise use 0
+        #         for ending in max_importance_endings_dict:
+        #             new_endings[ending] = endings.get(ending, 0)
+        #
+        #         lyrics["features"]["endings"] = new_endings
+        #         genre_lyrics[index] = lyrics
+        #
+        #     genre_lyrics_map[genre] = genre_lyrics
 
         Preprocessing._save_preprocessed_lyrics(genre_lyrics_map)
 

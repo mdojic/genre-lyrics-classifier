@@ -7,19 +7,16 @@ RESOURCES_PATH = APP_ROOT + "/res"
 # Lyrics folder paths
 LYRICS_PATH                      = RESOURCES_PATH + "/lyrics"
 RAW_LYRICS_FOLDER_PATH           = LYRICS_PATH + "/raw"
-FILTERED_LYRICS_FOLDER_PATH      = LYRICS_PATH + "/filtered"
 PREPROCESSED_LYRICS_FOLDER_PATH  = LYRICS_PATH + "/preprocessed"
-LYRICS_WITH_FEATURES_FOLDER_PATH = LYRICS_PATH + "/featurized"
+DATASET_LYRICS_FOLDER_PATH       = LYRICS_PATH + "/dataset"
 
-# Lyrics file paths
-FILTERED_LYRICS_FILE_PATH      = FILTERED_LYRICS_FOLDER_PATH + "/filtered_lyrics.txt"
-FILTERED_LYRICS_FILE_PATH_TEST = FILTERED_LYRICS_FOLDER_PATH + "/filtered_lyrics_test.text"
-
+# Preprocessed lyrics paths
 PREPROCESSED_LYRICS_FILE_PATH      = PREPROCESSED_LYRICS_FOLDER_PATH + "/preprocessed.txt"
 PREPROCESSED_LYRICS_FILE_PATH_TEST = PREPROCESSED_LYRICS_FOLDER_PATH + "/preprocessed_test.txt"
 
-LYRICS_WITH_FEATURES_FILE_PATH      = LYRICS_WITH_FEATURES_FOLDER_PATH + "/featurized.txt"
-LYRICS_WITH_FEATURES_FILE_PATH_TEST = LYRICS_WITH_FEATURES_FOLDER_PATH + "/featurized_test.txt"
+# Dataset lyrics paths
+TRAINING_DATASET_LYRICS_FILE_PATH = DATASET_LYRICS_FOLDER_PATH + "/training.txt"
+TEST_DATASET_LYRICS_FILE_PATH     = DATASET_LYRICS_FOLDER_PATH + "/test.txt"
 
 # Pickle paths
 MODEL_FOLDER_PATH = RESOURCES_PATH + "/model"
@@ -53,9 +50,9 @@ LYRICS_STANZA_BREAK = "\\n"
 
 # Boolean properties to control application actions
 DEBUG_MODE        = False
-FILTER_LYRICS     = False
 PREPROCESS_LYRICS = False
-TRAIN_CLASSIFIER  = False
+TRAIN_CLASSIFIER  = True
+SPLIT_DATASET     = False
 
 CC_SAMPLE = "Early hours open road family of five on their way home Having enjoyed a day in the sun their encounter with gore has just begun A homicidal fool not knowing left from right now has the family in his sight Trying to perceive if he's blind or insane he steers his car into the other lane Both of them collide expressions horrified Head on at full speed the vultures will soon feed The father of three was impaled on the wheel as his skull became a part of the dash His eyeballs ejected his sight uneffected he saw his own organs collapse His seatbelt was useless for holding him back it simply cut him in two Legs were crushed out leaked pus as his spinal cord took off and flew The mother took flight through the glass and ended up impaled on a sign Her intestines stretched from the car down the road for a quarter of a mile Fourth child on the way won't live another day Fetus on the road with mangled little bones Little children fly not a chance to wonder why Smashed against the ceiling all their skin burning and peeling Shards of glass explode chest and skull now implode Corpses they've become and graves will have to be dug Underneath the wheels burning rubber on your face Bleeding from your eyes the slaughtered victims lies Knowing what he's done he just backs up one more time Laughing at the mess a pile of meat on the street One child left slowly dying now arteries gushing blood Now it's time to feed on flesh the gore has just begun  Early hours open road family of five  on their way home Having enjoyed a day in the sun their encounter with gore has just begun A homicidal fool not knowing left from right now has the family in his sight Trying to perceive if he's blind or insane he steers his car into the other lane The look of death in my eye Surely noone will survive Just a pile of mush Left to dry in the sun I see my fresh kill Left in the road Remains of your bodies Mangled and torn"
 
