@@ -92,7 +92,7 @@ def get_preprocessed_lyrics_path():
     metal_path = PREPROCESSED_LYRICS_FILE_PATH_METAL
     all_path   = PREPROCESSED_LYRICS_FILE_PATH_ALL
 
-    metal_path_test = PREPROCESSED_LYRICS_FILE_PATH_METAL
+    metal_path_test = PREPROCESSED_LYRICS_FILE_PATH_METAL_TEST
     all_path_test   = PREPROCESSED_LYRICS_FILE_PATH_ALL_TEST
 
     if DEBUG_MODE:
