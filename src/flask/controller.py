@@ -1,12 +1,14 @@
 from flask import Flask, render_template, request, send_from_directory
 from src.utils.language_detect import LanguageDetector
-from src.clf.classify import Classify
+import src.clf.classify as classify
 
 app = Flask(__name__)
+
 
 @app.route("/")
 def index():
     return "e brt moj"
+
 
 @app.route("/classify", methods=["GET"])
 def classify():
@@ -24,7 +26,7 @@ def get_genre():
     if not lyrics_are_english:
         return "eng brt"
 
-    genre = Classify.predict_lyrics_genre(req_lyrics)
+    genre = classify.predict_lyrics_genre(req_lyrics)
     print("genre: ")
     print(genre)
     return genre
@@ -35,6 +37,7 @@ def get_genre():
     # 3. Call classifier on lyrics - check for errors
     # 4. Return determined genres (or percentage of probability for each genre?)
     pass
+
 
 @app.route('/js/<path:path>')
 def send_js(path):

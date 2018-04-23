@@ -5,89 +5,110 @@ import math
 from collections import defaultdict
 
 import app_data
-from src.utils.dataset_utils import DatasetUtils
-from src.clf.classify import Classify
-from src.utils.preprocessing import Preprocessing
+import src.clf.classify as clf
+
+import src.utils.preprocessing as preprocessing
+import src.utils.dataset_utils as dataset_utils
+
+# String to print in the console to separate different outputs
+CONSOLE_SEPARATOR = "\n\t***\n"
 
 
-class Main(object):
+def run():
 
-    def run(self):
-        start_time = time.time()
-        print("App started")
+    start_time = time.time()
+    print("App started")
+    print(CONSOLE_SEPARATOR)
 
-        # Check if preprocessing should be done for lyrics
-        preprocessing_needed = app_data.PREPROCESS_LYRICS
+    # Check if preprocessing should be done for lyrics
+    preprocessing_needed = app_data.PREPROCESS_LYRICS
+    if preprocessing_needed:
+        preprocess_lyrics()
 
-        if preprocessing_needed:
-            preprocess_start_time = time.time()
-            Preprocessing.preprocess_lyrics()
-            preprocess_end_time = time.time()
-            elapsed = preprocess_end_time - preprocess_start_time
-            print("Preprocessing time: " + str(elapsed))
+    # Split dataset into training and test set if needed
+    split_dataset_needed = app_data.SPLIT_DATASET
+    if split_dataset_needed:
+        split_dataset()
 
-        split_dataset_needed = app_data.SPLIT_DATASET
-        if split_dataset_needed:
-            genre_lyrics_map = self._load_lyrics()
+    # Load training and test sets
+    print("Load lyrics...")
+    training_set = dataset_utils.load_training_set()
+    test_set     = dataset_utils.load_test_set()
 
-            train_lyrics_map = defaultdict(list)
-            test_lyrics_map  = defaultdict(list)
+    print("Loaded.")
+    print(CONSOLE_SEPARATOR)
 
-            for genre, genre_lyrics in genre_lyrics_map.items():
-                size = len(genre_lyrics)
-                train_size = math.ceil(size*0.75)
-                test_start = train_size + 1
+    genres = app_data.get_genres()
 
-                genre_lyrics_train = genre_lyrics[:train_size]
-                genre_lyrics_test  = genre_lyrics[test_start:]
+    # Execute classification
+    print("Classify lyrics...")
+    clf.classify_and_test_lyrics(training_set, test_set, genres)
+    print("Classified.")
+    print(CONSOLE_SEPARATOR)
 
-                train_lyrics_map[genre] = genre_lyrics_train
-                test_lyrics_map[genre]  = genre_lyrics_test
-
-            print("Train lyrics map: ")
-            print(train_lyrics_map)
-
-            print("Test lyrics map: ")
-            print(test_lyrics_map)
-
-            DatasetUtils.save_training_set(train_lyrics_map)
-            DatasetUtils.save_test_set(test_lyrics_map)
-
-        training_set = DatasetUtils.load_training_set()
-        test_set = DatasetUtils.load_test_set()
+    end_time = time.time()
+    running_time = end_time - start_time
+    print("Finished main in " + str(running_time) + " seconds.")
 
 
-        print("Loaded lyrics")
+def preprocess_lyrics():
+    print("Preprocess lyrics...")
+    preprocess_start_time = time.time()
 
-        Classify.classify_lyrics(training_set, test_set)
+    preprocessing.preprocess_lyrics()
 
-        # self.classify_lyrics_bag_of_words(genre_lyrics_map)
-
-        # self.classify_lyrics_pos(genre_lyrics_map)
-
-        # self.classify_lyrics_mixed_features(genre_lyrics_map)
-
-        # Classify.classify_lyrics_all_features(genre_lyrics_map)
-
-        end_time = time.time()
-        running_time = end_time - start_time
-        print("Finished main in " + str(running_time) + " seconds")
+    preprocess_end_time = time.time()
+    elapsed = preprocess_end_time - preprocess_start_time
+    print("Preprocessing finished. Time took: " + str(elapsed))
+    print(CONSOLE_SEPARATOR)
 
 
-    def _load_lyrics(self):
+def split_dataset():
 
-        if app_data.DEBUG_MODE:
-            lyrics_file_path = app_data.PREPROCESSED_LYRICS_FILE_PATH_TEST
-        else:
-            lyrics_file_path = app_data.PREPROCESSED_LYRICS_FILE_PATH
+    print("Split dataset into training and test set...")
 
-        with open(lyrics_file_path, 'r') as lyrics_file:
-            genre_lyrics_map = json.load(lyrics_file)
+    # Load lyrics grouped by genre
+    genre_lyrics_map = load_lyrics()
 
-        return genre_lyrics_map
+    # Initialize empty maps (dicts) for training and test lyrics-per-genre
+    train_lyrics_map = defaultdict(list)
+    test_lyrics_map  = defaultdict(list)
 
+    for genre, genre_lyrics in genre_lyrics_map.items():
+
+        # Determine the boundaries of training and test data for current genre lyrics
+        size = len(genre_lyrics)
+        train_size = math.ceil(size * 0.75)
+        test_start = train_size + 1
+
+        # Split current genre's lyrics into training and test data
+        genre_lyrics_train = genre_lyrics[:train_size]
+        genre_lyrics_test  = genre_lyrics[test_start:]
+
+        # Save training and test lyrics for this genre into lyrics-per-genre maps
+        train_lyrics_map[genre] = genre_lyrics_train
+        test_lyrics_map[genre]  = genre_lyrics_test
+
+    # Save the split training and test set to project files for later usage
+    dataset_utils.save_training_set(train_lyrics_map)
+    dataset_utils.save_test_set(test_lyrics_map)
+
+    print("Split finished.")
+    print(CONSOLE_SEPARATOR)
+
+    pass
+
+
+def load_lyrics():
+
+    # Determine whether to load a small portion of data for testing,
+    # or to use the full dataset
+    lyrics_file_path = app_data.get_preprocessed_lyrics_path()
+    with open(lyrics_file_path, 'r') as lyrics_file:
+        genre_lyrics_map = json.load(lyrics_file)
+
+    return genre_lyrics_map
 
 
 if __name__ == "__main__":
-    main = Main()
-    main.run()
+    run()

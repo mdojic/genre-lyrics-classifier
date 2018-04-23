@@ -1,6 +1,5 @@
 import langdetect
 
-
 class LanguageDetector(object):
 
     @staticmethod
