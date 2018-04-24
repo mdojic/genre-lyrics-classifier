@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="19d29c49-46c9-41d0-ae28-a6a5d1f53cfd" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app_data.py" afterPath="$PROJECT_DIR$/app_data.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/clf/classify.py" afterPath="$PROJECT_DIR$/src/clf/classify.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/clf/custom_transformers.py" afterPath="$PROJECT_DIR$/src/clf/custom_transformers.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/drawing_utils.py" afterPath="$PROJECT_DIR$/src/utils/drawing_utils.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/preprocessing.py" afterPath="$PROJECT_DIR$/src/utils/preprocessing.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -395,7 +389,14 @@
       <option name="project" value="LOCAL" />
       <updated>1524448790041</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Improvements for limiting lyrics-per-genre count for training and test set; added confusion matrix drawing">
+      <created>1524536185870</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1524536185870</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -448,7 +449,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Improved project structure" />
     <MESSAGE value="Fixed mistake in path to the test folder for preprocessed metal lyrics" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed mistake in path to the test folder for preprocessed metal lyrics" />
+    <MESSAGE value="Improvements for limiting lyrics-per-genre count for training and test set; added confusion matrix drawing" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improvements for limiting lyrics-per-genre count for training and test set; added confusion matrix drawing" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -764,6 +766,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="970">
           <caret line="289" column="40" lean-forward="false" selection-start-line="289" selection-start-column="40" selection-end-line="289" selection-end-column="40" />
+          <folding>
+            <marker date="1524458834925" expanded="true" signature="8188:8244" ph="..." />
+            <marker date="1524458834925" expanded="true" signature="8265:8321" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -778,6 +784,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
           <caret line="137" column="0" lean-forward="false" selection-start-line="137" selection-start-column="0" selection-end-line="137" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
