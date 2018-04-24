@@ -48,6 +48,7 @@ class LyricsAvgVerseLengthVectorizer(BaseEstimator, TransformerMixin):
     def fit(self, x, y=None):
         return self
 
+
     def transform(self, lyrics_array):
 
         vector = []
@@ -176,7 +177,6 @@ class LyricsWordEndingsVectorizer(BaseEstimator, TransformerMixin):
         self._word_endings = []
         self._top_endings_count = top_endings_count
 
-
     def fit(self, lyrics_array, genres=None):
         """
         Fit vectorizer to given lyrics array, and optionally their genres. <br/>
@@ -198,9 +198,38 @@ class LyricsWordEndingsVectorizer(BaseEstimator, TransformerMixin):
 
         return self
 
+    def transform(self, lyrics_array):
+        """
+        Transform the given lyrics into an array of vectors representing the number of occurences
+        of the previously learned most important word endings in the given lyrics.
+
+        :param lyrics_array: The array of lyrics which to transform to vectors
+        :return: Array of vectors representing word ending frequencies.
+        """
+
+        vector = []
+
+        # Get endings which to count in all lyrics
+        learned_endings = self._word_endings
+        lyrics_endings_dicts = self.__get_ending_dicts(lyrics_array)
+        for lyrics_endings_dict in lyrics_endings_dicts:
+
+            # Initialize an empty dictionary for current lyrics containing endings as keys
+            top_endings_dict = {ending: 0 for ending in learned_endings}
+
+            for ending, count in lyrics_endings_dict.items():
+                # Count only endings which the vectorizer has learned (when fit was called)
+                if top_endings_dict.get(ending) is None:
+                    continue
+                else:
+                    top_endings_dict[ending] = count
+
+            vector.append(top_endings_dict)
+
+        return vector
+
 
     def __fit_with_genres(self, ending_dicts, genres):
-
         """
         Fit vectorizer to given list of endings dictionaries, using their genres to calculate
         the importance of each ending.
@@ -208,18 +237,14 @@ class LyricsWordEndingsVectorizer(BaseEstimator, TransformerMixin):
         :param ending_dicts: List of word ending dictionaries with their counts
         :param genres: List of genres corresponding to the given word ending dictionaries
         """
-
         all_endings_dict = {}
-
         # Get per-genre occurence counts for all endings
         for endings_dict, genre in zip(ending_dicts, genres):
             for ending, count in endings_dict.items():
-
                 # If this ending appeared for the first time, instantiate its genre dictionary
                 if all_endings_dict.get(ending) is None:
                     all_endings_dict[ending] = {}
 
-                # Increase the count for this ending in this genre
                 all_endings_dict[ending][genre] = all_endings_dict[ending].get(genre, 0) + count
 
         # Keep only most important endings
@@ -227,19 +252,15 @@ class LyricsWordEndingsVectorizer(BaseEstimator, TransformerMixin):
         # So if an ending appears often in one genre, and rarely in another, it has a high importance
         endings_with_importance = {}
         for ending, genre_counts in all_endings_dict.items():
-
             max_importance = -sys.maxsize
             counts = genre_counts.values()
 
             # Go through all pairs of genres and compare occurence counts in them for this ending
             for pair in itertools.combinations(counts, 2):
-
                 if pair[0] < pair[1]:
-                    smaller = pair[0]
-                    bigger  = pair[1]
+                    smaller, bigger = pair[0], pair[1]
                 else:
-                    smaller = pair[1]
-                    bigger  = pair[0]
+                    smaller, bigger = pair[1], pair[0]
 
                 # Get difference between occurences in current two genres
                 diff = bigger - smaller
@@ -248,7 +269,6 @@ class LyricsWordEndingsVectorizer(BaseEstimator, TransformerMixin):
                 # If two endings have pairs of genres which have the same occurence difference (e.g. 300 & 400, 0 & 100)
                 # then the pair which has the smaller number of occurences is more important (in given example, 0 & 100)
                 importance = diff - smaller
-
                 if importance > max_importance:
                     max_importance = importance
 
@@ -325,31 +345,6 @@ class LyricsWordEndingsVectorizer(BaseEstimator, TransformerMixin):
 
         return all_lyrics_ending_dicts
 
-
-    def transform(self, lyrics_array):
-
-        vector = []
-
-        # Get endings which to count in all lyrics
-        learned_endings = self._word_endings
-        lyrics_endings_dicts = self.__get_ending_dicts(lyrics_array)
-
-        for lyrics_endings_dict in lyrics_endings_dicts:
-
-            # Initialize an empty dictionary for current lyrics containing endings as keys
-            top_endings_dict = {ending : 0 for ending in learned_endings}
-
-            for ending, count in lyrics_endings_dict.items():
-
-                # Count only endings which the vectorizer has learned (when fit was called)
-                if top_endings_dict.get(ending) is None:
-                    continue
-                else:
-                    top_endings_dict[ending] = count
-
-            vector.append(top_endings_dict)
-
-        return vector
 
 
 #############################################################################

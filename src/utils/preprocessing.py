@@ -16,7 +16,8 @@ def preprocess_lyrics():
 
     other_genres_lyrics_map = _preprocess_other_lyrics()
 
-    # Join all metal lyrics in one array, add it to other genres map and save it in one preprocessed file
+    # Join all metal lyrics in one array, add it to other genres map and
+    # save it in one preprocessed file
     metal_lyrics = []
     for genre, lyrics in metal_subgenres_lyrics_map.items():
         metal_lyrics = metal_lyrics + lyrics
@@ -207,7 +208,7 @@ def _preprocess_other_lyrics():
     return genre_lyrics_map
 
 
-def remove_newlines(string):
+def _remove_newlines(string):
     result = string.replace("\\n", " ")
     return result
 
@@ -284,7 +285,7 @@ def get_lyrics_dict(lyrics):
         lyrics = re.sub(regex, "", lyrics, flags=re.IGNORECASE)
 
     # Remove newlines and everything except alphanumeric strings and apostrophes
-    lyrics = remove_newlines(lyrics)
+    lyrics = _remove_newlines(lyrics)
     lyrics = re.sub('[^A-Za-z0-9\s\']+', '', lyrics)
 
     # Check if lyrics are valid and skip them if they aren't

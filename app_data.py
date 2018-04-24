@@ -42,7 +42,7 @@ PICKLE_FILE_PATH_METAL = MODEL_FOLDER_PATH + "/pickle_metal.pkl"
 PICKLE_FILE_PATH_ALL   = MODEL_FOLDER_PATH + "/pickle_all.pkl"
 
 # Application variables
-LYRICS_GENRES_METAL = ["black", "death", "doom", "thrash"]
+LYRICS_GENRES_METAL = ["black", "death", "thrash"]
 LYRICS_GENRES_OTHER = ["pop", "rap"]
 LYRICS_GENRES_ALL   = ["pop", "rap", "metal"]
 BATCH_SIZE    = 80
@@ -75,8 +75,8 @@ LYRICS_STANZA_BREAK = "\\n"
 DEBUG_MODE         = False      # Whether to run the app in debug mode (use test files with less data etc)
 PREPROCESS_LYRICS  = False      # Whether to preprocess lyrics when the app starts
 TRAIN_CLASSIFIER   = True       # Whether to train the classifier and pickle it, or to load a pickled one
-SPLIT_DATASET      = True      # Whether to split lyrics datasets into training and test set files
-METAL_ONLY         = False       # Whether to run the app for metal subgenres, or for "big" genres
+SPLIT_DATASET      = True       # Whether to split lyrics datasets into training and test set files
+METAL_ONLY         = False      # Whether to run the app for metal subgenres, or for "big" genres
 LIMIT_LYRICS_COUNT = True       # Whether to limit the max amount of lyrics per genre or use all available lyrics
 # =================================================================
 

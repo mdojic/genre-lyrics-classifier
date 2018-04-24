@@ -1,5 +1,6 @@
 import joblib
 import numpy as np
+import sys
 from sklearn.feature_extraction.dict_vectorizer import DictVectorizer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
@@ -8,6 +9,7 @@ from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import MultinomialNB
+from sklearn.naive_bayes import GaussianNB
 from sklearn.pipeline import FeatureUnion
 from sklearn.pipeline import Pipeline
 from sklearn.svm import LinearSVC
@@ -43,7 +45,25 @@ def classify_and_test_lyrics(training_set, test_set, genres):
 
     lyrics_train, lyrics_test, genres_train, genres_test = [], [], [], []
 
-    # Go through all available genres
+    # Whether to limit lyrics count per genre or not
+    limit_lyrics_count = app_data.LIMIT_LYRICS_COUNT
+    if limit_lyrics_count:
+
+        # Get all training and test lyrics arrays
+        training_lyrics_arrays = []
+        test_lyrics_arrays = []
+        for genre in genres:
+            training_lyrics_arrays.append(training_set[genre])
+            test_lyrics_arrays.append(test_set[genre])
+
+        # Set max lyrics counts to the size of the smallest genre lyrics sample
+        max_training_length = len(min(training_lyrics_arrays, key=len))
+        max_test_length = len(min(test_lyrics_arrays, key=len))
+    else:
+        max_training_length = sys.maxsize
+        max_test_length = sys.maxsize
+
+    # Go through all available genres and build training and test set from their lyrics
     for genre in genres:
 
         current_genre_lyrics_count = 0
@@ -53,16 +73,10 @@ def classify_and_test_lyrics(training_set, test_set, genres):
         genre_lyrics_test  = test_set[genre]
         genre_lyrics = genre_lyrics_train + genre_lyrics_test
         print("Lyrics count for genre " + genre + ": " + str(len(genre_lyrics)))
-        print("Train lyrics count for genre {}: {}".format(genre, len(genre_lyrics_train)))
-        print("Test lyrics count for genre {}: {}".format(genre, len(genre_lyrics_test)))
-        print("\n")
-
-        # Whether to limit lyrics count per genre or not
-        limit_lyrics_count = app_data.LIMIT_LYRICS_COUNT
 
         # Append current genre's training lyrics to training set, and the genre to training classes
         for song_lyrics in genre_lyrics_train:
-            if limit_lyrics_count and current_genre_lyrics_count > 1500:
+            if limit_lyrics_count and current_genre_lyrics_count > max_training_length:
                 break
 
             lyrics_train.append(song_lyrics)
@@ -74,7 +88,7 @@ def classify_and_test_lyrics(training_set, test_set, genres):
 
         # Append current genre's test lyrics to test set, and the genre to test classes
         for song_lyrics in genre_lyrics_test:
-            if current_genre_lyrics_count > 1500:
+            if current_genre_lyrics_count > max_test_length:
                 break
 
             lyrics_test.append(song_lyrics)
@@ -88,49 +102,52 @@ def classify_and_test_lyrics(training_set, test_set, genres):
         # Get transformers for extracting features from lyrics
         transformers_union = _get_lyrics_vectorizers()
 
+        # Get classifier for classifying lyrics
+        classifier = _get_classifier()
+
         # Build a pipeline which extracts features from lyrics, and then classifies them
         pipeline = Pipeline([
             ('transformers', transformers_union),
-            ('clf', LinearSVC())
+            ('clf', classifier)
         ])
 
-        # gs_clf = GridSearchCV(pipeline, parameters, n_jobs=1)
         # Teach the classifier
         print("Teach classifier...")
         pipeline.fit(lyrics_train, genres_train)
-        # gs_clf.fit(lyrics_train, genres_train)
 
         # Pickle taught classifier
-        # pickled_clf_path = app_data.PICKLE_FILE_PATH_METAL if metal_only else app_data.PICKLE_FILE_PATH_ALL
         pickled_clf_path = app_data.get_classifier_pickle_path()
         joblib.dump(pipeline, pickled_clf_path)
-        print("\n\n\t\t DUMPED PIPELINE CLASSIFIER \n\n")
     else:
-        # pickled_clf_path = app_data.PICKLE_FILE_PATH_METAL if metal_only else app_data.PICKLE_FILE_PATH_ALL
         pickled_clf_path = app_data.get_classifier_pickle_path()
         pipeline = joblib.load(pickled_clf_path)
 
     print("Teaching finished.")
+
     print("Test classifier...")
     # Test the precision of the taught classifier on the test set
-    print("\n pipeline: ")
-    print(pipeline)
-    print("\n")
     score = pipeline.score(lyrics_test, genres_test)
-    pipeline.score
     print("Done.")
     print("Score = " + str(score))
 
+    # Get transformer and classifier from pipeline
     tf = pipeline.named_steps.transformers
     clf = pipeline.named_steps.clf
 
-    labels = app_data.get_genres()
-
+    # Get vectorized test lyrics from pipeline's transformer union
     vectorized_lyrics = tf.transform(lyrics_test)
+
+    # Predicted classes for test set
     predicted_classes = clf.predict(vectorized_lyrics)
+
+    # True classes for test set
     true_classes = genres_test
 
-    print_confusion_matrix(true_classes, predicted_classes, labels=labels)
+    # Labels for visualization
+    labels = genres
+
+    # Print/visualize results based on true classes and predicted classes of the test set
+    print_confusion_matrix(true_classes, predicted_classes, labels=labels, data_normalization="both")
     print_classification_report(true_classes, predicted_classes)
 
 
@@ -173,7 +190,7 @@ def _get_lyrics_vectorizers():
             ),
 
             ('lyrics_bow', Pipeline([
-                                ('vectorizer', TfidfVectorizer(stop_words='english', max_df=0.6))
+                                ('vectorizer', _get_tfidf_vectorizer())
                            ])
             )
 
@@ -189,20 +206,35 @@ def _get_lyrics_vectorizers():
             'lyrics_bow'      : 10
         }
     )
-    print("\n\n\t\t GOT THE VECTORIZER UNION \n\n")
+
     return union
 
 
-def print_confusion_matrix(true_classes, predicted_classes, labels=None, normalize=False):
+def _get_classifier():
+    return MultinomialNB()
+    # return LinearSVC()
+
+
+def _get_tfidf_vectorizer():
+    return TfidfVectorizer(stop_words='english', max_df=0.6)
+
+
+def print_confusion_matrix(true_classes, predicted_classes, labels=None, data_normalization="no"):
 
     matrix = confusion_matrix(true_classes, predicted_classes, labels)
 
     if labels is not None:
-        dutils.plot_confusion_matrix(matrix, labels, title="Genre confusion matrix", normalize=normalize)
+        if data_normalization is "no":
+            dutils.plot_confusion_matrix(matrix, labels, title="Genre confusion matrix", normalize=False)
+        elif data_normalization is "yes":
+            dutils.plot_confusion_matrix(matrix, labels, title="Genre confusion matrix", normalize=True)
+        else:
+            dutils.plot_confusion_matrix(matrix, labels, title="Genre confusion matrix", normalize=False)
+            dutils.plot_confusion_matrix(matrix, labels, title="Genre confusion matrix", normalize=True)
 
     print("\n")
     print("-" * 64)
-    print("Confusion matrix: " )
+    print("Confusion matrix: ")
     print(matrix)
     print("-" * 64)
     print("\n")
@@ -218,7 +250,6 @@ def print_classification_report(true_classes, predicted_classes, labels=None):
     print(report)
     print("-" * 64)
     print("\n")
-
 
 
 #######################################################################################################################
